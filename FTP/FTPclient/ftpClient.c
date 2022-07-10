@@ -1,5 +1,8 @@
 #include<stdio.h>
 #include "ftpClient.h"
+
+char g_recvBuf[1024];
+
 int main() {
 	initSocket();
 
@@ -28,42 +31,60 @@ bool closeSocket() {
 	return true;
 }
 
-//监听客户端连接
 void connectToHost() {
-	/*
-	创建socket套接字
-	*/
 	SOCKET serfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (INVALID_SOCKET == serfd) {
 		printf("socket faild:%d\n", WSAGetLastError());
 		return;
 	}
 
-	/*
-	给socket绑定IP地址、端口号
-	*/
 	struct sockaddr_in serAddr;
 	serAddr.sin_family = AF_INET;
-	//协议类型 必须和创建socket指定的一样
 	serAddr.sin_port = htons(SPORT);
-	//端口号 由于大端编址和小端编址的影响，需要把本地字节序转换为网络字节序
-	serAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); //服务器的ip地址 本地回环 需要把点分十进制转为2进制
+	serAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); 
 	
-	//链接到服务器
 	if (0 != connect(serfd, (struct sockaddr*)&serAddr, sizeof(serAddr))) {
 		printf("connect faild:%d\n", WSAGetLastError());
 		return;
 	}
 
-	//开始处理消息
 	while (processMsg(serfd)) {
 		Sleep(5000);
 	}
 }
 //处理消息
 bool processMsg(SOCKET serfd) {
-	printf("hello !\n");
-	char sendBuf[1024] = "hello 我是客户端";
-	send(serfd, sendBuf, strlen(sendBuf)+1, 0);//+1是'\0'
+
+	downloadFileName(serfd);
+
+	recv(serfd, g_recvBuf, 1023, 0);
+	struct MsgHeader* msg = (struct MsgHeader*)g_recvBuf;
+	switch (msg->msgID) {
+	case MsgOpenfileFailed:
+		downloadFileName(serfd);
+		break;
+	case MsgSize:
+		readyread(serfd, msg);
+
+		break;
+	}
+
 	return true;
+}
+
+void downloadFileName(SOCKET serfd) {
+	char fileName[1024] = "hello 我是客户端";
+	gets_s(fileName, 1023);				//获取要下载的文件
+
+	struct MsgHeader file = { .msgID = MsgFilename };
+	strcpy(file.fileInfo.fileName, fileName);
+
+	send(serfd, (char*)&file, sizeof(struct MsgHeader), 0);//+1是'\0'
+}
+
+void readyread(SOCKET serfd, struct MsgHeader* pmsg) {
+	printf("size:%d filename:%s \n", pmsg->fileInfo.filesize, pmsg->fileInfo.fileName);
+	//准备内存 pmsg->fileInfo.filesize
+	//给服务器 发送 MsgReady
+		
 }

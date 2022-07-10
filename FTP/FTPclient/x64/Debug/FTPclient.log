@@ -1,5 +1,4 @@
 ﻿  ftpClient.c
-D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\FTPclient\ftpClient.c(50,33): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
-D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\FTPclient\ftpClient.c(67,38): warning C4267: “函数”: 从“size_t”转换到“int”，可能丢失数据
-  LINK : 没有找到 D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\x64\Debug\FTPclient.exe 或上一个增量链接没有生成它；正在执行完全链接
-  FTPclient.vcxproj -> D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\x64\Debug\FTPclient.exe
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPclient\ftpClient.c(44,33): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPclient\ftpClient.c(80,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  FTPclient.vcxproj -> D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\x64\Debug\FTPclient.exe

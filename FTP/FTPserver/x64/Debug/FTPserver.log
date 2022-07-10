@@ -1,3 +1,8 @@
 ﻿  ftpServer.c
-  LINK : 没有找到 D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\x64\Debug\FTPserver.exe 或上一个增量链接没有生成它；正在执行完全链接
-  FTPserver.vcxproj -> D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\ftp_Repository\FTP\x64\Debug\FTPserver.exe
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(102,8): warning C4102: “defalt”: 未引用的标签
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(111,16): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(128,2): warning C4996: '_splitpath': This function or variable may be unsafe. Consider using _splitpath_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(129,2): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(130,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\FTPserver\ftpServer.c(137): warning C4715: “readFile”: 不是所有的控件路径都返回值
+  FTPserver.vcxproj -> D:\BaiduNetdisk_\BaiduSyncdisk\2.3\计算机网络课程设计\MyProject\FTP\x64\Debug\FTPserver.exe

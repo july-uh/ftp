@@ -2,7 +2,7 @@
 #include "ftpServer.h"
 
 char g_recvBuf[1024];//用来接收客户端发送的消息
-
+int g_fileSize;	 //文件大小
 int main() {
 	initSocket();
 
@@ -81,6 +81,7 @@ void listenToClient() {
 		Sleep(5000);
 	}
 }
+
 //处理消息
 bool processMsg(SOCKET clifd) {
 	//成功接收消息，返回接受到的字节数，接受失败返回0
@@ -88,8 +89,49 @@ bool processMsg(SOCKET clifd) {
 	if (nRes <= 0) {
 		printf("客户端下线...%d\n", WSAGetLastError());
 	}
-	else {
-		printf("%s\n", g_recvBuf);
+
+	//获取接收到的消息
+	struct MsgHeader* msg = (struct MsgHeader*)g_recvBuf;
+	switch (msg -> msgID) {
+	case MsgFilename:
+		printf("%s\n", msg->fileInfo.fileName);
+		readFile(clifd, msg);
+	//case MsgSize:
+
+	//case :
+	defalt:
+		break;
 	}
+
 	return true;
+}
+
+//读取文件，获取文件大小
+bool readFile(SOCKET clifd, struct MsgHeader* pmsg) {
+	FILE* pread = fopen(pmsg->fileInfo.fileName, "rb");
+	if (pread == NULL) {
+		printf("找不到[%s]文件...\n",pmsg->fileInfo.fileName);
+		struct MsgHeader msg = { .msgID = MsgOpenfileFailed };
+		if (SOCKET_ERROR == send(clifd, (char*)&msg, sizeof(struct MsgHeader), 0)) {
+			printf("send failed:%d\n", WSAGetLastError());
+		}
+		return false;
+	}
+	//如果文件读取成功，则获取文件大小
+	fseek(pread, 0, SEEK_END);
+	g_fileSize = ftell(pread);
+	fseek(pread, 0, SEEK_SET);
+	
+	//把文件大小发给客户端
+	struct MsgHeader msg = { .msgID = MsgSize,.fileInfo.filesize = g_fileSize };
+	char tfname[200] = { 0 }, text[100];
+	_splitpath(pmsg->fileInfo.fileName, NULL, NULL, tfname, text);
+	strcat(tfname, text);
+	strcpy(msg.fileInfo.fileName, tfname);
+
+	send(clifd, (char*)&msg, sizeof(struct MsgHeader), 0);
+
+	//发送文件
+
+	fclose(pread);
 }
